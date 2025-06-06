@@ -27,6 +27,8 @@ import { Eye, EyeOff, Loader2 } from "lucide-react";
 
 const Login = () => {
 
+    const focus = "transition-all outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]";
+    
     const [showPassword, setShowPassword] = useState(false);
 
     const formSchema = z.object({
@@ -53,7 +55,7 @@ const Login = () => {
     };
 
     return (
-        <main className="p-4">
+        <main className="w-full p-4">
             <Card className="w-full max-w-sm m-auto">
                 <CardHeader>
                     <CardTitle><Logo /></CardTitle>
@@ -106,7 +108,7 @@ const Login = () => {
                                 )}
                             />
                             <div className="text-sm text-right -mt-2">
-                                <Link to="/forgot-password" className="text-muted-foreground hover:underline">
+                                <Link to="/forgot-password" className={`text-muted-foreground hover:underline ${focus}`}>
                                     Forgot password?
                                 </Link>
                             </div>
@@ -125,7 +127,7 @@ const Login = () => {
                                 }
                             </Button>
                             <div className="text-sm text-center -mt-1">
-                                <Link to="/signup" className="text-muted-foreground hover:underline">
+                                <Link to="/signup" className={`text-muted-foreground hover:underline ${focus}`}>
                                     Don’t have an account? Signup
                                 </Link>
                             </div>

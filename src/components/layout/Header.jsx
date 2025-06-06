@@ -13,7 +13,7 @@ import { AlignJustify } from "lucide-react";
 
 const Header = () => {
     return (
-        <header className="p-4 max-w-6xl mx-auto flex justify-between items-center">
+        <header className="p-4 w-full max-w-6xl mx-auto flex justify-between items-center border-b-1 mb-3">
             <Link to="/landing" className="transition-all outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]"><Logo /></Link>
             <nav className="sm:hidden">
                 <Sheet>
