@@ -1,6 +1,5 @@
 import { Outlet } from "react-router-dom";
 
-import { Button } from "../ui/button";
 import Header from "./Header";
 
 const Layout = () => {
@@ -8,10 +7,6 @@ const Layout = () => {
         <>
             <Header />
             <Outlet />
-            <div>
-                <Button>Get Started</Button>
-                <Button variant="secondary">About us</Button>
-            </div>
         </>
     )
 }
