@@ -1,15 +1,39 @@
-import { Button } from "./components/ui/button";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+
+import Layout from "./components/layout/Layout";
+import Dashboard from "./pages/Dashboard";
+import Landing from "./pages/Landing";
+import Login from "./pages/Login";
+import Signup from "./pages/Signup";
 
 const App = () => {
-    return (
-        <div className="flex flex-col gap-3 justify-center items-center min-h-screen">
-            <h1 className="text-3xl text-bold underline">Credify</h1>
-            <div>
-                <Button>Get Started</Button>
-                <Button variant="secondary">About us</Button>
-            </div>
-        </div>
-    )
+
+    const router = createBrowserRouter([
+        {
+            path: "/",
+            element: <Layout />,
+            children: [
+                {
+                    path: "/landing",
+                    element: <Landing />
+                },
+                {
+                    path: "/login",
+                    element: <Login />
+                },
+                {
+                    path: "/signup",
+                    element: <Signup />
+                },
+                {
+                    path: "/",
+                    element: <Dashboard />
+                },
+            ]
+        }
+    ])
+
+    return <RouterProvider router={router} />
 }
 
 export default App;
