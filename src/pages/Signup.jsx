@@ -25,7 +25,7 @@ import Logo from "../components/ui/Logo";
 import { toast } from "sonner";
 
 import { Eye, EyeOff, Loader2 } from "lucide-react";
-import { AuthService } from "../service/authentication";
+import { AuthService } from "../service/Authentication";
 import { getFirebaseAuthErrorMessage } from "../utils/getFirebaseAuthErrorMessage";
 
 const Signup = () => {

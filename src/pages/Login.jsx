@@ -24,7 +24,7 @@ import { Button } from "../components/ui/button";
 import Logo from "../components/ui/Logo";
 
 import { Eye, EyeOff, Loader2 } from "lucide-react";
-import { AuthService } from "../service/authentication";
+import { AuthService } from "../service/Authentication";
 
 const Login = () => {
 

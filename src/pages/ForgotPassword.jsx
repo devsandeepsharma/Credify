@@ -25,7 +25,7 @@ import { toast } from "sonner";
 import Logo from "../components/ui/Logo";
 
 import { Loader2 } from "lucide-react";
-import { AuthService } from "../service/authentication";
+import { AuthService } from "../service/Authentication";
 
 const ForgotPassword = () => {
 

@@ -1,7 +1,7 @@
 import { useDispatch } from "react-redux";
 
 import { Button } from "../components/ui/button";
-import { AuthService } from "../service/authentication";
+import { AuthService } from "../service/Authentication";
 import { authActions } from "../store/authSlice";
 
 const Dashboard = () => {
