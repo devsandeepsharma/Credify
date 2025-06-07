@@ -24,12 +24,14 @@ import { Button } from "../components/ui/button";
 import Logo from "../components/ui/Logo";
 
 import { Eye, EyeOff, Loader2 } from "lucide-react";
+import { AuthService } from "../service/authentication";
 
 const Login = () => {
 
     const focus = "transition-all outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]";
     
     const [showPassword, setShowPassword] = useState(false);
+    const [error, setError] = useState();
 
     const formSchema = z.object({
         email: z.string().email({
@@ -50,8 +52,12 @@ const Login = () => {
     });
 
     const onSubmit = async (values) => {
-        console.log(values);
-        await new Promise((resolve) => setTimeout(resolve, 2000));
+        setError("");
+        try {
+            await AuthService.loginUser(values);
+        } catch (error) {
+            setError("Invalid login credentials.");
+        }
     };
 
     return (
@@ -75,7 +81,7 @@ const Login = () => {
                                         <FormControl>
                                             <Input placeholder="user@gmail.com" {...field} />
                                         </FormControl>
-                                        <FormMessage />
+                                        <FormMessage>{error}</FormMessage>
                                     </FormItem>
                                 )}
                             />
@@ -103,7 +109,7 @@ const Login = () => {
                                                 </Button>
                                             </div>
                                         </FormControl>
-                                        <FormMessage />
+                                        <FormMessage>{error}</FormMessage>
                                     </FormItem>
                                 )}
                             />

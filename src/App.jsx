@@ -5,6 +5,7 @@ import Dashboard from "./pages/Dashboard";
 import Landing from "./pages/Landing";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
+import AuthLayout from "./components/layout/AuthLayout";
 
 const App = () => {
 
@@ -33,7 +34,11 @@ const App = () => {
         }
     ])
 
-    return <RouterProvider router={router} />
+    return (
+        <AuthLayout>
+            <RouterProvider router={router} />
+        </AuthLayout>
+    )
 }
 
 export default App;

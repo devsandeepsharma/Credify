@@ -38,6 +38,50 @@ class Authentication {
         return true;
     }
 
+    async loginUser({ email, password }) {
+        const res = await fetch(`${this.baseUrl}/accounts:signInWithPassword?key=${this.apiKey}`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                email,
+                password,
+                returnSecureToken: true
+            })
+        })
+
+        const data = await res.json();
+
+        if (!res.ok) {
+            throw new Error(data.error?.message);
+        }
+
+        this.setToken(data.idToken);
+
+        return true;
+    }
+
+    async getUserData(idToken) {
+        const res = await fetch(`${this.baseUrl}/accounts:lookup?key=${this.apiKey}`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                idToken
+            })
+        })
+
+        const data = await res.json();
+
+        if (!res.ok) {
+            throw new Error(data.error?.message);
+        }
+
+        return data;
+    }
+ 
     async updateUsername({ idToken, displayName }) {
         const res = await fetch(`${this.baseUrl}/accounts:update?key=${this.apiKey}`, {
             method: "POST",
@@ -78,6 +122,28 @@ class Authentication {
         }
 
         return true;
+    }
+
+    checkCurrentUser(callback) {
+        const handler = (e) => {
+            callback(e.detail);
+        };
+
+        window.addEventListener("tokenChanged", handler);
+
+        const token = localStorage.getItem("token");
+        if (token) {
+            callback(token);
+        }
+
+        return () => {
+            window.removeEventListener("tokenChanged", handler);
+        };
+    }
+
+    setToken(token) {
+        localStorage.setItem("token", token);
+        window.dispatchEvent(new CustomEvent("tokenChanged", { detail: token }));
     }
 }
 
