@@ -9,6 +9,10 @@ import Landing from "./pages/Landing";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import ForgotPassword from "./pages/ForgotPassword";
+import Testimonials from "./pages/Testimonials";
+import Template from "./pages/Template";
+import Pricing from "./pages/Pricing";
+import ShareLink from "./pages/ShareLink";
 
 const App = () => {
 
@@ -56,6 +60,34 @@ const App = () => {
                             <Dashboard />
                         </ProtectedRoute>
                     )
+                },
+                {
+                    path: "/testimonials",
+                    element: (
+                        <ProtectedRoute>
+                            <Testimonials />
+                        </ProtectedRoute>
+                    )
+                },
+                {
+                    path: "/template",
+                    element: (
+                        <ProtectedRoute>
+                            <Template />
+                        </ProtectedRoute>
+                    )
+                },
+                {
+                    path: "/pricing",
+                    element: (
+                        <ProtectedRoute>
+                            <Pricing />
+                        </ProtectedRoute>
+                    )
+                },
+                {
+                    path: "/v1/:slug",
+                    element: <ShareLink />
                 },
             ]
         }
