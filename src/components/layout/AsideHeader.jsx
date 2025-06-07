@@ -1,14 +1,21 @@
 import { Link, NavLink } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 
 import { useSidebar } from "../ui/sidebar";
 import { Button } from "../ui/button";
 import Logo from "../ui/Logo";
+import EditProfileForm from "../profile/EditProfileForm";
+import { AuthService } from "../../service/Authentication";
+import { authActions } from "../../store/authSlice";
 
-import { AlignJustify, Edit, LogOut } from "lucide-react";
+import { AlignJustify, LogOut } from "lucide-react";
 
 const AsideHeader = () => {
 
     const focus = "transition-all outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]";
+
+    const user = useSelector(state => state.auth.user);
+    const dispatch = useDispatch();
 
     const {
         isMobile,
@@ -24,6 +31,11 @@ const AsideHeader = () => {
         { name: "Template", to: "/template" },
         { name: "Pricing", to: "/pricing" },
     ];
+
+    const logout = () => {
+        AuthService.logoutuser();
+        dispatch(authActions.logout());
+    }
 
     return (
         <>
@@ -54,13 +66,13 @@ const AsideHeader = () => {
 
         <aside
             className={`
-                fixed top-0 right-0 h-full w-64 z-50 transform transition-transform duration-300 ease-in-out
+                fixed top-0 right-0 min-h-screen w-64 z-50 flex flex-col transform transition-transform duration-300 ease-in-out
                 ${isMobile ? (openMobile ? "translate-x-0" : "translate-x-full") : (open ? "translate-x-0" : "translate-x-full")}
                 md:static md:translate-x-0 md:flex md:flex-col
                 bg-sidebar text-sidebar-foreground border-r border-sidebar-border`
             }
         >
-            <div className="flex items-center pl-8 h-16 border-b">
+            <div className="flex items-center pl-4 h-16 border-b">
                 <Logo />
             </div>
 
@@ -89,19 +101,15 @@ const AsideHeader = () => {
 
             <div className="border-t p-4 mt-auto flex items-center justify-between">
                 <div className="flex flex-col truncate">
-                    <p className="text-sm font-semibold text-white truncate">Username</p>
-                    <p className="text-xs text-gray-400 truncate">user@example.com</p>
+                    <p className="text-sm font-semibold text-white truncate">{user?.username}</p>
+                    <p className="text-xs text-gray-400 truncate">{user?.email}</p>
                 </div>
                 <div className="flex items-center space-x-3">
+                    <EditProfileForm />
                     <button
-                        className={`p-1 rounded hover:bg-accent ${focus}`}
-                        aria-label="Edit Profile"
-                    >
-                        <Edit />
-                    </button>
-                    <button
-                        className={`p-1 rounded hover:bg-accent ${focus}`}
+                        className={`cursor-pointer p-1 rounded hover:bg-accent ${focus}`}
                         aria-label="Logout"
+                        onClick={logout}
                     >
                         <LogOut />
                     </button>
