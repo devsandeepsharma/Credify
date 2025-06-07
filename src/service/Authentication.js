@@ -104,6 +104,27 @@ class Authentication {
         return true;
     }
 
+    async sendPasswordResetLink({ email }) {
+        const res = await fetch(`${this.baseUrl}/accounts:sendOobCode?key=${this.apiKey}`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                email,
+                requestType: "PASSWORD_RESET"
+            })
+        })
+
+        const data = await res.json();
+
+        if (!res.ok) {
+            throw new Error(data.error?.message);
+        }
+
+        return true;
+    }
+
     async deleteUser({ idToken }) {
         const res = await fetch(`${this.baseUrl}/accounts:delete?key=${this.apiKey}`, {
             method: "POST",

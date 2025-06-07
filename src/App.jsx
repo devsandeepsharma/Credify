@@ -1,13 +1,14 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
+import AuthLayout from "./components/layout/AuthLayout";
+import PublicRoute from "./components/layout/PublicRoute";
+import ProtectedRoute from "./components/layout/ProtectedRoute";
 import Layout from "./components/layout/Layout";
 import Dashboard from "./pages/Dashboard";
 import Landing from "./pages/Landing";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
-import AuthLayout from "./components/layout/AuthLayout";
-import PublicRoute from "./components/layout/PublicRoute";
-import ProtectedRoute from "./components/layout/ProtectedRoute";
+import ForgotPassword from "./pages/ForgotPassword";
 
 const App = () => {
 
@@ -37,6 +38,14 @@ const App = () => {
                     element: (
                         <PublicRoute>
                             <Signup />
+                        </PublicRoute>
+                    )
+                },
+                {
+                    path: "/forgot-password",
+                    element: (
+                        <PublicRoute>
+                            <ForgotPassword />
                         </PublicRoute>
                     )
                 },
