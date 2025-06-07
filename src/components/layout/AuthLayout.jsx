@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 
 import { toast } from "sonner";
-import { AuthService } from "../../service/authentication";
+import { AuthService } from "../../service/Authentication";
 import { authActions } from "../../store/authSlice";
 
 const AuthLayout = ({ children }) => {
