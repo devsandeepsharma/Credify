@@ -6,6 +6,8 @@ import Landing from "./pages/Landing";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import AuthLayout from "./components/layout/AuthLayout";
+import PublicRoute from "./components/layout/PublicRoute";
+import ProtectedRoute from "./components/layout/ProtectedRoute";
 
 const App = () => {
 
@@ -16,19 +18,35 @@ const App = () => {
             children: [
                 {
                     path: "/landing",
-                    element: <Landing />
+                    element: (
+                        <PublicRoute>
+                            <Landing />
+                        </PublicRoute>
+                    )
                 },
                 {
                     path: "/login",
-                    element: <Login />
+                    element: (
+                        <PublicRoute>
+                            <Login />
+                        </PublicRoute>
+                    )
                 },
                 {
                     path: "/signup",
-                    element: <Signup />
+                    element: (
+                        <PublicRoute>
+                            <Signup />
+                        </PublicRoute>
+                    )
                 },
                 {
                     path: "/",
-                    element: <Dashboard />
+                    element: (
+                        <ProtectedRoute>
+                            <Dashboard />
+                        </ProtectedRoute>
+                    )
                 },
             ]
         }

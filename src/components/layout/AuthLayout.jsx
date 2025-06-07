@@ -1,23 +1,33 @@
 import { useEffect } from "react";
+import { useDispatch } from "react-redux";
 
 import { toast } from "sonner";
 import { AuthService } from "../../service/authentication";
+import { authActions } from "../../store/authSlice";
 
 const AuthLayout = ({ children }) => {
 
+    const dispatch = useDispatch();
+
     useEffect(() => {
         const unsubscribe = AuthService.checkCurrentUser(async (token) => {
-            console.log(token)
             if(token) {
                 try {
                     const user = await AuthService.getUserData(token);
-                    console.log(user);
+                    const userData = {
+                        username: user.users[0].displayName,
+                        localId: user.users[0].localId,
+                        email: user.users[0].email
+                    }
+                    dispatch(authActions.login(userData));
                 } catch (error) {
-                    console.log(error);
+                    dispatch(authActions.logout());
                     toast("Session expired", {
                         description: "Please login again to continue.",
                     });
                 }
+            } else {
+                dispatch(authActions.logout());
             }
         });
 

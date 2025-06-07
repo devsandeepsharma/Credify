@@ -134,6 +134,8 @@ class Authentication {
         const token = localStorage.getItem("token");
         if (token) {
             callback(token);
+        } else {
+            callback(null);
         }
 
         return () => {
