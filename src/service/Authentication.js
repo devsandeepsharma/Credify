@@ -124,6 +124,10 @@ class Authentication {
         return true;
     }
 
+    logoutuser() {
+        localStorage.removeItem("token");
+    }
+
     checkCurrentUser(callback) {
         const handler = (e) => {
             callback(e.detail);
