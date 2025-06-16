@@ -1,15 +1,69 @@
-import { Button } from "./components/ui/button";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+
+import Layout from "./components/layout/Layout";
+import ShareLink from "./pages/ShareLink";
+import Landing from "./pages/Landing";
+import Login from "./pages/Login";
+import Signup from "./pages/Signup";
+import ForgotPassword from "./pages/ForgotPassword";
+import Dashboard from "./pages/Dashboard";
+import Testimonials from "./pages/Testimonials";
+import Template from "./pages/Template";
+import Profile from "./pages/Profile";
+import Pricing from "./pages/Pricing";
 
 const App = () => {
-    return (
-        <div className="flex flex-col gap-3 justify-center items-center min-h-screen">
-            <h1 className="text-3xl font-bold">Credify</h1>
-            <div className="flex gap-2">
-                <Button>Get Started</Button>
-                <Button variant="secondary">View Website</Button>
-            </div>
-        </div>
-    )
+
+    const Router = createBrowserRouter([
+        {
+            path: "/v1/:slug",
+            element: <ShareLink />
+        },
+        {
+            path: "/",
+            element: <Layout />,
+            children: [
+                {
+                    path: "/landing",
+                    element: <Landing />
+                },
+                {
+                    path: "/login",
+                    element: <Login />
+                },
+                {
+                    path: "/signup",
+                    element: <Signup />
+                },
+                {
+                    path: "/forgot-password",
+                    element: <ForgotPassword />
+                },
+                {
+                    path: "/",
+                    element: <Dashboard />
+                },
+                {
+                    path: "/testimonials",
+                    element: <Testimonials />
+                },
+                {
+                    path: "/template",
+                    element: <Template />
+                },
+                {
+                    path: "/profile",
+                    element: <Profile />
+                },
+                {
+                    path: "/pricing",
+                    element: <Pricing />
+                },
+            ]
+        }
+    ])
+
+    return <RouterProvider router={Router} />
 }
 
 export default App;
