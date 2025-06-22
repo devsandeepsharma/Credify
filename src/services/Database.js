@@ -8,7 +8,6 @@ class Database {
 
     async put (subPath, values) {
         const res = await axios.put(`${this.baseUrl}/${this.path}/${subPath}.json`, values);
-
         return res.data;
     }
 
@@ -19,10 +18,10 @@ class Database {
 
     async get (subPath) {
         const res = await axios.get(`${this.baseUrl}/${this.path}/${subPath}.json`);
-
         return res.data;
     }
 }
 
 export const UserService = new Database("users");
 export const SlugService = new Database("slugs");
+export const TestimonialService = new Database("testimonials");

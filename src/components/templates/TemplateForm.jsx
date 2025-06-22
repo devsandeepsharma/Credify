@@ -17,6 +17,7 @@ import { Button } from "../ui/button";
 import { toast } from "sonner";
 
 import { Loader2 } from "lucide-react";
+import { TestimonialService } from "../../services/Database";
 
 const TemplateForm = ({ responsive=false, localId }) => {
     
@@ -37,8 +38,8 @@ const TemplateForm = ({ responsive=false, localId }) => {
     const onSubmit = async (values) => {
         setError("");
         try {
-            console.log(localId);
-            console.log(values);
+            const id = Date.now();
+            await TestimonialService.patch(`${localId}/${id}`, values);
             form.reset();
             toast.success("Feedback submitted", {
                 description: "Thanks for sharing your experience!",
