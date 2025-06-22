@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 
 import { toast } from "sonner";
+import Loader from "../ui/Loader";
+
 import { AuthService } from "../../services/Authentication";
 import { TestimonialService, UserService } from "../../services/Database";
 import { authActions } from "../../store/authSlice";
@@ -41,7 +43,7 @@ const AuthLayout = ({ children }) => {
         };
     }, [])
 
-    if(loading) return <h1>Loading....</h1>
+    if(loading) return <Loader />
 
     return children;
 }

@@ -1,12 +1,14 @@
 import { Navigate } from "react-router";
 import { useSelector } from "react-redux";
 
+import Loader from "../ui/Loader";
+
 const ProtectedRoute = ({ children }) => {
 
     const { authenticate, initialized } = useSelector((state) => state.auth);
 
     if (!initialized) {
-        return <h1>Loading...</h1>; 
+        return <Loader />; 
     }
 
     return authenticate ? children : <Navigate to="/landing" replace />
