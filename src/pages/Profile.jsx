@@ -7,6 +7,7 @@ import { Input } from "../components/ui/input";
 import { Textarea } from "../components/ui/textarea";
 import EditProfileForm from "../components/profile/EditProfileForm";
 
+import { templateData } from "../components/templates/templateData";
 import { AuthService } from "../services/Authentication";
 import { authActions } from "../store/authSlice";
 
@@ -85,7 +86,7 @@ const Profile = () => {
                 <div className="flex flex-col md:flex-row gap-6 mb-6">
                     <div className="flex-1">
                         <Label className="mb-3" htmlFor="template">Current Template</Label>
-                        <Input id="template" value={user?.template || "Default"} disabled />
+                        <Input id="template" value={templateData[user?.template].title || "Default"} disabled />
                     </div>
                     <div className="flex-1">
                         <Label className="mb-3" htmlFor="plan">Current Plan</Label>
