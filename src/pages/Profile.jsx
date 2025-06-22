@@ -89,7 +89,7 @@ const Profile = () => {
                     </div>
                     <div className="flex-1">
                         <Label className="mb-3" htmlFor="plan">Current Plan</Label>
-                        <Input id="plan" value={user?.hasPremium || "Basic"} disabled />
+                        <Input id="plan" value={user?.hasPremium ? "Premium Plan Rs. 199/-":"Free Basic Plan Rs. 0/-"} disabled />
                     </div>
                 </div>
 
