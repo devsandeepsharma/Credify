@@ -1,8 +1,16 @@
+import { motion } from "framer-motion";
+
 import TemplateForm from "./TemplateForm";
 
-const ModernGrid = ({ localId, companyLogo="", companyName, companyDesc="", testimonials = [] }) => {
+const ModernGrid = ({ localId, companyLogo="", companyName, companyDesc="", testimonials = [], hasPremium }) => {
     return (
-        <div className="min-h-screen flex flex-col">
+        <motion.div
+            className="min-h-screen flex flex-col"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 20 }}
+            transition={{ duration: 0.4 }}
+        >
             <header className="border-b border-border">
                 <div className="p-4 max-w-7xl mx-auto flex justify-between items-center">
                     <div className="flex items-center space-x-3">
@@ -37,7 +45,7 @@ const ModernGrid = ({ localId, companyLogo="", companyName, companyDesc="", test
                     }
                     <div className="md:hidden mt-8">
                         <h2 className="text-lg font-semibold mb-6">Send us your feedback</h2>
-                        <TemplateForm localId={localId} />
+                        <TemplateForm localId={localId} canSubmit={hasPremium || testimonials.length < 5} />
                     </div>
 
                     <section>
@@ -48,13 +56,13 @@ const ModernGrid = ({ localId, companyLogo="", companyName, companyDesc="", test
                                     No testimonials yet — be the first to share your thoughts! 🙌
                                 </div>
                             )}
-                            {testimonials.map(({ id, name, feedback }) => (
+                            {testimonials.map(({ id, username, message }) => (
                                 <blockquote
                                     key={id}
                                     className="bg-card text-card-foreground p-6 rounded-xl border border-border shadow-sm"
                                 >
-                                    <p className="text-muted-foreground">“{feedback}”</p>
-                                    <footer className="mt-3 text-sm text-muted-foreground">- {name}</footer>
+                                    <p className="text-muted-foreground">“{message}”</p>
+                                    <footer className="mt-3 text-sm text-muted-foreground">- {username}</footer>
                                 </blockquote>
                             ))}
                         </div>
@@ -66,10 +74,10 @@ const ModernGrid = ({ localId, companyLogo="", companyName, companyDesc="", test
 
                 <section className="hidden md:block md:w-[500px] md:sticky md:top-20 md:self-start bg-card rounded-xl p-8 shadow-lg">
                     <h2 className="text-lg font-semibold mb-6">Send us your feedback</h2>
-                    <TemplateForm localId={localId} />
+                    <TemplateForm localId={localId} canSubmit={hasPremium || testimonials.length < 5} />
                 </section>
             </main>
-        </div>
+        </motion.div>
     );
 };
 

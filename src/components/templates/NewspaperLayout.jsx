@@ -1,8 +1,16 @@
+import { motion } from "framer-motion";
+
 import TemplateForm from "./TemplateForm";
 
-const NewspaperLayout = ({ localId, companyLogo="", companyName, companyDesc="", testimonials = [] }) => {
+const NewspaperLayout = ({ localId, companyLogo="", companyName, companyDesc="", testimonials = [], hasPremium }) => {
     return (
-        <div className="min-h-screen font-serif max-w-6xl mx-auto p-10">
+        <motion.div
+            className="min-h-screen font-serif max-w-6xl mx-auto p-10"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 20 }}
+            transition={{ duration: 0.4 }}
+        >
             <header className="mb-10">
                 <div className="flex items-center justify-start gap-3">
                     {
@@ -31,7 +39,7 @@ const NewspaperLayout = ({ localId, companyLogo="", companyName, companyDesc="",
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-16">
                 <section>
-                    <TemplateForm localId={localId} />
+                    <TemplateForm localId={localId} canSubmit={hasPremium || testimonials.length < 5} />
                 </section>
                 <section className="md:max-h-[400px] md:overflow-y-auto">
                     <h3 className="text-2xl font-semibold mb-6 border-b border-muted-foreground pb-1">
@@ -44,13 +52,13 @@ const NewspaperLayout = ({ localId, companyLogo="", companyName, companyDesc="",
                             </div>
                         )}
                         {
-                            testimonials.map(({ id, name, feedback }) => (
+                            testimonials.map(({ id, username, message }) => (
                                 <blockquote
                                     key={id}
                                     className="border-l-4 border-primary pl-4 italic text-muted-foreground"
                                 >
-                                    <p className="text-foreground">“{feedback}”</p>
-                                    <footer className="mt-1 font-semibold text-primary">— {name}</footer>
+                                    <p className="text-foreground">“{message}”</p>
+                                    <footer className="mt-1 font-semibold text-primary">— {username}</footer>
                                 </blockquote>
                             ))
                         }
@@ -60,7 +68,7 @@ const NewspaperLayout = ({ localId, companyLogo="", companyName, companyDesc="",
                     </footer>
                 </section>
             </div>
-        </div>
+        </motion.div>
     );
 };
 

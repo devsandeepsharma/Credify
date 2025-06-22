@@ -1,21 +1,29 @@
+import { motion } from "framer-motion";
+
 import TemplateForm from "./TemplateForm";
 
-const CreativePortfolio = ({ localId, companyLogo="", companyName, companyDesc="", testimonials = [] }) => {
+const CreativePortfolio = ({ localId, companyLogo="", companyName, companyDesc="", testimonials = [], hasPremium }) => {
     return (
-        <div className="min-h-screen font-sans flex flex-col">
+        <motion.div
+            className="min-h-screen font-sans flex flex-col"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 20 }}
+            transition={{ duration: 0.4 }}
+        >
             <header className="border-b border-border py-6 px-8 max-w-7xl mx-auto flex flex-col justify-between items-center gap-3">
                 <div className="flex items-center space-x-5">
                     {
-                            companyLogo && (
-                                <div className="w-10 h-10 flex items-center justify-center">
-                                    <img
-                                        src={companyLogo}
-                                        alt={companyName}
-                                        className="w-full h-full object-cover"
-                                    />
-                                </div>
-                            )
-                        }
+                        companyLogo && (
+                            <div className="w-10 h-10 flex items-center justify-center">
+                                <img
+                                    src={companyLogo}
+                                    alt={companyName}
+                                    className="w-full h-full object-cover"
+                                />
+                            </div>
+                        )
+                    }
                     <h1 className="font-serif text-4xl font-bold tracking-tight">
                         {companyName}
                     </h1>
@@ -39,7 +47,7 @@ const CreativePortfolio = ({ localId, companyLogo="", companyName, companyDesc="
                     }
 
                     <div className="md:hidden mb-12">
-                        <TemplateForm localId={localId} />
+                        <TemplateForm localId={localId} canSubmit={hasPremium || testimonials.length < 5} />
                     </div>
 
                     <p className="mb-12 italic text-muted-foreground font-semibold">
@@ -52,16 +60,16 @@ const CreativePortfolio = ({ localId, companyLogo="", companyName, companyDesc="
                                 No testimonials yet — be the first to share your thoughts! 🙌
                             </div>
                         )}
-                        {testimonials.map(({ id, name, feedback }, i) => (
+                        {testimonials.map(({ id, username, message }, i) => (
                             <blockquote
                                 key={id}
                                 className={`bg-card text-card-foreground rounded-lg p-6 shadow-md border border-border transform transition-transform duration-300 hover:scale-105 ${
                                 i % 2 === 0 ? "rotate-1" : "-rotate-1"
                                 }`}
                             >
-                                <p className="italic text-lg">“{feedback}”</p>
+                                <p className="italic text-lg">“{message}”</p>
                                 <footer className="mt-4 text-right font-semibold text-muted-foreground">
-                                — {name}
+                                — {username}
                                 </footer>
                             </blockquote>
                         ))}
@@ -73,10 +81,10 @@ const CreativePortfolio = ({ localId, companyLogo="", companyName, companyDesc="
                 </section>
 
                 <section className="hidden md:block md:w-[400px] md:sticky md:top-20 md:self-start bg-card rounded-3xl shadow-lg p-10 border border-border z-10">
-                    <TemplateForm localId={localId} />
+                    <TemplateForm localId={localId} canSubmit={hasPremium || testimonials.length < 5} />
                 </section>
             </main>
-        </div>
+        </motion.div>
     );
 };
 
