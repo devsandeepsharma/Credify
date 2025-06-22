@@ -63,13 +63,33 @@ class Authentication {
             returnSecureToken: true
         })
 
-        this.setToken(res.data.idToken);
+        this.setToken(res.data.localId);
 
         return true;
     }
 
+    checkCurrentUser(callback) {
+        const handler = (e) => {
+            callback(e.detail);
+        };
+
+        window.addEventListener("tokenChanged", handler);
+
+        const token = localStorage.getItem("token");
+        if (token) {
+            callback(token);
+        } else {
+            callback(null);
+        }
+
+        return () => {
+            window.removeEventListener("tokenChanged", handler);
+        };
+    }
+
     setToken(token) {
         localStorage.setItem("token", token);
+        window.dispatchEvent(new CustomEvent("tokenChanged", { detail: token }));
     }
 
 }

@@ -1,6 +1,7 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 import Layout from "./components/layout/Layout";
+import AuthLayout from "./components/layout/AuthLayout";
 import ShareLink from "./pages/ShareLink";
 import Landing from "./pages/Landing";
 import Login from "./pages/Login";
@@ -21,7 +22,11 @@ const App = () => {
         },
         {
             path: "/",
-            element: <Layout />,
+            element: (
+                <AuthLayout>
+                    <Layout />
+                </AuthLayout>
+            ),
             children: [
                 {
                     path: "/landing",
