@@ -47,6 +47,22 @@ class Authentication {
         return true;
     }
 
+    async login ({email, password}) {
+        const res = await axios.post(`${this.baseUrl}/accounts:signInWithPassword?key=${this.apiKey}`, {
+            email,
+            password,
+            returnSecureToken: true
+        })
+
+        this.setToken(res.data.idToken);
+
+        return true;
+    }
+
+    setToken(token) {
+        localStorage.setItem("token", token);
+    }
+
 }
 
 export const AuthService = new Authentication();

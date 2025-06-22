@@ -25,6 +25,7 @@ import { Button } from "../components/ui/button";
 import Logo from "../components/ui/Logo";
 
 import { Eye, EyeOff, Loader2 } from "lucide-react";
+import { AuthService } from "../services/Authentication";
 
 const Login = () => {
 
@@ -54,7 +55,7 @@ const Login = () => {
     const onSubmit = async (values) => {
         setError("");
         try {
-            console.log(values);
+            await AuthService.login(values);
         } catch (error) {
             setError("Invalid login credentials.");
         }
