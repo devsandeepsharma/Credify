@@ -12,6 +12,11 @@ class Database {
         return res.data;
     }
 
+    async patch (subPath, values) {
+        const res = await axios.patch(`${this.baseUrl}/${this.path}/${subPath}.json`, values);
+        return res.data;
+    }
+
     async get (subPath) {
         const res = await axios.get(`${this.baseUrl}/${this.path}/${subPath}.json`);
 
