@@ -1,23 +1,21 @@
-import { useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 import { Button } from "../components/ui/button";
-import { AuthService } from "../services/Authentication";
-import { authActions } from "../store/authSlice";
 
 const Dashboard = () => {
 
-    const dispatch = useDispatch();
-
-    const logout = () => {
-        AuthService.logout();
-        dispatch(authActions.logout());
-    }
+    const user = useSelector(state => state.auth.user);
 
     return (
-        <>
-            <h2 className="text-xl">Dashboard</h2>
-            <Button className="w-fit" onClick={logout}>Logout</Button>
-        </>
+        <main>
+            <h2>Dashboard</h2>
+            <Link target="_blank" to={`/v1/${user.slug}`}>
+                <Button>
+                    {`/v1/${user.slug}`}
+                </Button>
+            </Link>
+        </main>
     )
 }
 
