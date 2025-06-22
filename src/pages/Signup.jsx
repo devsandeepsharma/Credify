@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -22,16 +22,19 @@ import {
 } from "../components/ui/card"
 import { Input } from "../components/ui/input";
 import { Button } from "../components/ui/button";
+import { toast } from "sonner";
 import Logo from "../components/ui/Logo";
 
 import { Eye, EyeOff, Loader2 } from "lucide-react";
+import { AuthService } from "../services/Authentication";
 
 const Signup = () => {
 
     const focus = "transition-all outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]";
 
+    const navigate = useNavigate();
+    
     const [showPassword, setShowPassword] = useState(false);
-    const [error, setError] = useState();
 
     const formSchema = z.object({
         companyName: z.string().min(2, { 
@@ -56,11 +59,22 @@ const Signup = () => {
     });
 
     const onSubmit = async (values) => {
-        setError("");
         try {
-            console.log(values);
+            await AuthService.create(values);
+            toast("Account created successfully!", {
+                description: "You can now log in.",
+            });
+            navigate("/login");
         } catch (error) {
-            console.log(error);
+            let msg = error.response?.data?.error.message;
+            if(msg === "EMAIL_EXISTS") {
+                msg = "This email is already registered.";
+            } else {
+                msg = "Something went wrong. Please try again.";
+            }
+            toast("Signup failed", {
+                description: msg,
+            });
         }
     };
 
@@ -93,7 +107,7 @@ const Signup = () => {
                                                 <FormControl>
                                                     <Input placeholder="Company Name" {...field} />
                                                 </FormControl>
-                                                <FormMessage>{error}</FormMessage>
+                                                <FormMessage />
                                             </FormItem>
                                         )}
                                     />
@@ -106,7 +120,7 @@ const Signup = () => {
                                                 <FormControl>
                                                     <Input placeholder="user@gmail.com" {...field} />
                                                 </FormControl>
-                                                <FormMessage>{error}</FormMessage>
+                                                <FormMessage />
                                             </FormItem>
                                         )}
                                     />
@@ -134,7 +148,7 @@ const Signup = () => {
                                                         </Button>
                                                     </div>
                                                 </FormControl>
-                                                <FormMessage>{error}</FormMessage>
+                                                <FormMessage />
                                             </FormItem>
                                         )}
                                     />
