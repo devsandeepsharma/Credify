@@ -11,6 +11,12 @@ class Database {
 
         return res.data;
     }
+
+    async get (subPath) {
+        const res = await axios.get(`${this.baseUrl}/${this.path}/${subPath}.json`);
+
+        return res.data;
+    }
 }
 
 export const UserService = new Database("users");

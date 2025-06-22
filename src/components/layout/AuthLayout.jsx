@@ -1,9 +1,14 @@
 import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 
 import { toast } from "sonner";
 import { AuthService } from "../../services/Authentication";
+import { UserService } from "../../services/Database";
+import { authActions } from "../../store/authSlice";
 
 const AuthLayout = ({ children }) => {
+
+    const dispatch = useDispatch();
 
     const [loading, setLoading] = useState(false);
 
@@ -12,8 +17,10 @@ const AuthLayout = ({ children }) => {
         const unsubscribe = AuthService.checkCurrentUser(async (token) => {
             if(token) {
                 try {
-                    console.log(token);
+                    const user = await UserService.get(token);
+                    dispatch(authActions.login(user));
                 } catch (error) {
+                    dispatch(authActions.logout());
                     toast("Session expired", {
                         description: "Please login again to continue.",
                     });
@@ -21,6 +28,7 @@ const AuthLayout = ({ children }) => {
                     setLoading(false);
                 }
             } else {
+                dispatch(authActions.logout());
                 setLoading(false);
             }
         });
