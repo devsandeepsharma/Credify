@@ -1,8 +1,16 @@
+import { motion } from "framer-motion";
+
 import TemplateForm from "./TemplateForm";
 
-const ClassicLayout = ({ localId, companyLogo="", companyName, companyDesc="", testimonials = [] }) => {
+const ClassicLayout = ({ localId, companyLogo="", companyName, companyDesc="", testimonials = [], hasPremium }) => {
     return (
-        <div className="min-h-screen">
+        <motion.div
+            className="min-h-screen"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 20 }}
+            transition={{ duration: 0.4 }}
+        >
             <header className="border-b mb-2">
                 <div className="p-4 w-full max-w-6xl mx-auto flex justify-between items-center">
                     <div className="flex items-center space-x-3">
@@ -38,7 +46,7 @@ const ClassicLayout = ({ localId, companyLogo="", companyName, companyDesc="", t
                         Share your experience with us. We appreciate your words!
                     </p>
                 </section>
-                <TemplateForm responsive={true} localId={localId} />
+                <TemplateForm responsive={true} localId={localId} canSubmit={hasPremium || testimonials.length < 5} />
                 <section className="space-y-6">
                     <h2 className="text-xl font-semibold mb-5">What people say</h2>
                     {testimonials.length === 0 && (
@@ -47,13 +55,13 @@ const ClassicLayout = ({ localId, companyLogo="", companyName, companyDesc="", t
                         </div>
                     )}
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        {testimonials.map(({ id, name, feedback }) => (
+                        {testimonials.map(({ id, username, message }) => (
                             <blockquote
                                 key={id}
                                 className="bg-card text-card-foreground p-4 rounded-xl border py-6 shadow-sm"
                             >
-                                <p className="text-gray-200">“{feedback}”</p>
-                                <footer className="mt-2 text-sm text-gray-400">- {name}</footer>
+                                <p className="text-gray-200">“{message}”</p>
+                                <footer className="mt-2 text-sm text-gray-400">- {username}</footer>
                             </blockquote>
                         ))}
                     </div>
@@ -66,7 +74,7 @@ const ClassicLayout = ({ localId, companyLogo="", companyName, companyDesc="", t
                     </p>
                 </div>
             </footer>
-        </div>
+        </motion.div>
     );
 };
 

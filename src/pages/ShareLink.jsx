@@ -2,12 +2,13 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
 import { Toaster } from "sonner";
+import Loader from "../components/templates/Loader";
 import ClassicLayout from "../components/templates/ClassicLayout";
 import CreativePortfolio from "../components/templates/CreativePortfolio";
 import ModernGrid from "../components/templates/ModernGrid";
 import NewspaperLayout from "../components/templates/NewspaperLayout";
 
-import { SlugService, UserService } from "../services/Database";
+import { SlugService, TestimonialService, UserService } from "../services/Database";
 
 const ShareLink = () => {
 
@@ -21,6 +22,7 @@ const ShareLink = () => {
     const { slug } = useParams();
 
     const [user, setUser] = useState(null);
+    const [testimonials, setTestimonials] = useState(null);
     const [loading, setLoading] = useState(true);
 
     const selected = user?.template || 0;
@@ -31,7 +33,9 @@ const ShareLink = () => {
             try {
                 const uid = await SlugService.get(slug);
                 const user = await UserService.get(uid?.localId);
+                const testimonials = await TestimonialService.get(uid?.localId);
                 setUser(user);
+                setTestimonials(Object.values(testimonials));
             } catch (error) {
                 setUser(null);
             } finally {
@@ -42,14 +46,14 @@ const ShareLink = () => {
         fetchData();
     }, []);
 
-    if (loading) return <h2>Loading...</h2>;
+    if (loading) return <Loader />;
     if (!user.companyName) return <h2>User not found</h2>;
 
     return (
         <>
             {SelectedTemplate ? (
                 <>
-                    <SelectedTemplate {...user} localId={user?.localId} />
+                    <SelectedTemplate {...user} testimonials={testimonials} localId={user?.localId} />
                     <Toaster />
                 </>
             ) : (

@@ -2,6 +2,7 @@ import { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import { motion } from "framer-motion";
 
 import {
     Form,
@@ -19,7 +20,7 @@ import { toast } from "sonner";
 import { Loader2 } from "lucide-react";
 import { TestimonialService } from "../../services/Database";
 
-const TemplateForm = ({ responsive=false, localId }) => {
+const TemplateForm = ({ responsive=false, localId, canSubmit }) => {
     
     const [error, setError] = useState();
     
@@ -52,64 +53,76 @@ const TemplateForm = ({ responsive=false, localId }) => {
     };
 
     return (
-        <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-                <div className={`flex flex-col gap-6 w-full ${responsive && "md:flex-row"}`}>
+        <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 10 }}
+            transition={{ duration: 0.4, ease: "easeOut" }}
+        >
+            <Form {...form}>
+                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+                    <div className={`flex flex-col gap-6 w-full ${responsive && "md:flex-row"}`}>
+                        <FormField
+                            control={form.control}
+                            name="username"
+                            render={({ field }) => (
+                                <FormItem className={`${responsive && "flex-1"}`}>
+                                    <FormLabel>Name</FormLabel>
+                                    <FormControl>
+                                        <Input placeholder="Your name" {...field} />
+                                    </FormControl>
+                                    <FormMessage>{error}</FormMessage>
+                                </FormItem>
+                            )}
+                        />
+                        <FormField
+                            control={form.control}
+                            name="email"
+                            render={({ field }) => (
+                                <FormItem className={`${responsive && "flex-1"}`}>
+                                    <FormLabel>Email</FormLabel>
+                                    <FormControl>
+                                        <Input placeholder="email@example.com" {...field} />
+                                    </FormControl>
+                                    <FormMessage>{error}</FormMessage>
+                                </FormItem>
+                            )}
+                        />
+                    </div>
                     <FormField
                         control={form.control}
-                        name="username"
+                        name="message"
                         render={({ field }) => (
-                            <FormItem className={`${responsive && "flex-1"}`}>
-                                <FormLabel>Name</FormLabel>
+                            <FormItem>
+                                <FormLabel>Message</FormLabel>
                                 <FormControl>
-                                    <Input placeholder="Your name" {...field} />
+                                    <Textarea placeholder="Your thoughts..." rows={5} {...field} />
                                 </FormControl>
                                 <FormMessage>{error}</FormMessage>
                             </FormItem>
                         )}
                     />
-                    <FormField
-                        control={form.control}
-                        name="email"
-                        render={({ field }) => (
-                            <FormItem className={`${responsive && "flex-1"}`}>
-                                <FormLabel>Email</FormLabel>
-                                <FormControl>
-                                    <Input placeholder="email@example.com" {...field} />
-                                </FormControl>
-                                <FormMessage>{error}</FormMessage>
-                            </FormItem>
+                    {!canSubmit && (
+                        <p className="text-sm text-red-400 text-center">
+                            Testimonial limit reached. Upgrade to premium to collect more. 🚀
+                        </p>
+                    )}
+                    <Button
+                        type="submit"
+                        disabled={!canSubmit || !form.formState.isValid || form.formState.isSubmitting}
+                        className="w-full"
+                    >
+                        {form.formState.isSubmitting ? (
+                        <span className="flex items-center justify-center gap-2">
+                            <Loader2 className="animate-spin w-5 h-5" /> Sending...
+                        </span>
+                        ) : (
+                        "Send Feedback"
                         )}
-                    />
-                </div>
-                <FormField
-                    control={form.control}
-                    name="message"
-                    render={({ field }) => (
-                        <FormItem>
-                            <FormLabel>Message</FormLabel>
-                            <FormControl>
-                                <Textarea placeholder="Your thoughts..." rows={5} {...field} />
-                            </FormControl>
-                            <FormMessage>{error}</FormMessage>
-                        </FormItem>
-                    )}
-                />
-                <Button
-                    type="submit"
-                    disabled={!form.formState.isValid || form.formState.isSubmitting}
-                    className="w-full"
-                >
-                    {form.formState.isSubmitting ? (
-                    <span className="flex items-center justify-center gap-2">
-                        <Loader2 className="animate-spin w-5 h-5" /> Sending...
-                    </span>
-                    ) : (
-                    "Send Feedback"
-                    )}
-                </Button>
-            </form>
-        </Form>
+                    </Button>
+                </form>
+            </Form>
+        </motion.div>
     )
 }
 
