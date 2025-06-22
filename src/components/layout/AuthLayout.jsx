@@ -3,8 +3,9 @@ import { useDispatch } from "react-redux";
 
 import { toast } from "sonner";
 import { AuthService } from "../../services/Authentication";
-import { UserService } from "../../services/Database";
+import { TestimonialService, UserService } from "../../services/Database";
 import { authActions } from "../../store/authSlice";
+import { testimonialActions } from "../../store/testimonialSlice";
 
 const AuthLayout = ({ children }) => {
 
@@ -18,7 +19,9 @@ const AuthLayout = ({ children }) => {
             if(token) {
                 try {
                     const user = await UserService.get(token);
+                    const testimonials = await TestimonialService.get(user.localId);
                     dispatch(authActions.login(user));
+                    dispatch(testimonialActions.setData(testimonials));
                 } catch (error) {
                     dispatch(authActions.logout());
                     toast("Session expired", {

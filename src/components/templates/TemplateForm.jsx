@@ -39,7 +39,7 @@ const TemplateForm = ({ responsive=false, localId }) => {
         setError("");
         try {
             const id = Date.now();
-            await TestimonialService.patch(`${localId}/${id}`, values);
+            await TestimonialService.patch(`${localId}/${id}`, {...values, id, createdAt: new Date().toISOString()});
             form.reset();
             toast.success("Feedback submitted", {
                 description: "Thanks for sharing your experience!",
