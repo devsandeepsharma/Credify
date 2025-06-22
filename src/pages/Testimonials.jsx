@@ -68,6 +68,11 @@ const Testimonials = () => {
                 </Select>
             </div>
             <div className="grid gap-6 grid-cols-[repeat(auto-fit,minmax(250px,1fr))]">
+                {testimonials.length === 0 && (
+                    <h2 className="text-center text-gray-400 text-sm">
+                        No testimonials have been submitted yet.
+                    </h2>
+                )}
                 {testimonials.map((testimonial) => (
                 <motion.div
                     key={testimonial.id}
