@@ -68,6 +68,10 @@ class Authentication {
         return true;
     }
 
+    logout() {
+        localStorage.removeItem("token");
+    }
+
     checkCurrentUser(callback) {
         const handler = (e) => {
             callback(e.detail);

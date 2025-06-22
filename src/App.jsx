@@ -2,6 +2,8 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 import Layout from "./components/layout/Layout";
 import AuthLayout from "./components/layout/AuthLayout";
+import PublicRoute from "./components/layout/PublicRoute";
+import ProtectedRoute from "./components/layout/ProtectedRoute";
 import ShareLink from "./pages/ShareLink";
 import Landing from "./pages/Landing";
 import Login from "./pages/Login";
@@ -30,39 +32,75 @@ const App = () => {
             children: [
                 {
                     path: "/landing",
-                    element: <Landing />
+                    element: (
+                        <PublicRoute>
+                            <Landing />
+                        </PublicRoute>
+                    )
                 },
                 {
                     path: "/login",
-                    element: <Login />
+                    element: (
+                        <PublicRoute>
+                            <Login />
+                        </PublicRoute>
+                    )
                 },
                 {
                     path: "/signup",
-                    element: <Signup />
+                    element: (
+                        <PublicRoute>
+                            <Signup />
+                        </PublicRoute>
+                    )
                 },
                 {
                     path: "/forgot-password",
-                    element: <ForgotPassword />
+                    element: (
+                        <PublicRoute>
+                            <ForgotPassword />
+                        </PublicRoute>
+                    )
                 },
                 {
                     path: "/",
-                    element: <Dashboard />
+                    element: (
+                        <ProtectedRoute>
+                            <Dashboard />
+                        </ProtectedRoute>
+                    )
                 },
                 {
                     path: "/testimonials",
-                    element: <Testimonials />
+                    element: (
+                        <ProtectedRoute>
+                            <Testimonials />
+                        </ProtectedRoute>
+                    )
                 },
                 {
                     path: "/template",
-                    element: <Template />
+                    element: (
+                        <ProtectedRoute>
+                            <Template />
+                        </ProtectedRoute>
+                    )
                 },
                 {
                     path: "/profile",
-                    element: <Profile />
+                    element: (
+                        <ProtectedRoute>
+                            <Profile />
+                        </ProtectedRoute>
+                    )
                 },
                 {
                     path: "/pricing",
-                    element: <Pricing />
+                    element: (
+                        <ProtectedRoute>
+                            <Pricing />
+                        </ProtectedRoute>
+                    )
                 },
             ]
         }
