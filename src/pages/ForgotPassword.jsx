@@ -22,9 +22,11 @@ import {
 } from "../components/ui/card"
 import { Input } from "../components/ui/input";
 import { Button } from "../components/ui/button";
+import { toast } from "sonner";
 import Logo from "../components/ui/Logo";
 
 import { Loader2 } from "lucide-react";
+import { AuthService } from "../services/Authentication";
 
 const ForgotPassword = () => {
 
@@ -49,9 +51,15 @@ const ForgotPassword = () => {
     const onSubmit = async (values) => {
         setError("");
         try {
-            console.log(values);
+            await AuthService.sendPasswordResetLink(values);
+            toast("Reset link sent", {
+                description: "Check your email to reset your password."
+            });
         } catch (error) {
             setError("Something went wrong. Try again.");
+            toast("Error sending reset link", {
+                description: "Please try again later."
+            });
         }
     };
 

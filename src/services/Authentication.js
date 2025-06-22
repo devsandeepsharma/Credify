@@ -47,6 +47,15 @@ class Authentication {
         return true;
     }
 
+    async sendPasswordResetLink({email}) {
+        await axios.post(`${this.baseUrl}/accounts:sendOobCode?key=${this.apiKey}`, {
+            email,
+            requestType: "PASSWORD_RESET"
+        })
+
+        return true;
+    }
+
     async login ({email, password}) {
         const res = await axios.post(`${this.baseUrl}/accounts:signInWithPassword?key=${this.apiKey}`, {
             email,
