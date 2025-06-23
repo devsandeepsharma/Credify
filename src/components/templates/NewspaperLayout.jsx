@@ -52,7 +52,7 @@ const NewspaperLayout = ({ localId, companyLogo="", companyName, companyDesc="",
                             </div>
                         )}
                         {
-                            testimonials.map(({ id, username, message }) => (
+                            testimonials.slice(0, 4).map(({ id, username, message }) => (
                                 <blockquote
                                     key={id}
                                     className="border-l-4 border-primary pl-4 italic text-muted-foreground"

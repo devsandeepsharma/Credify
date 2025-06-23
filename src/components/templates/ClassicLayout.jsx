@@ -55,7 +55,7 @@ const ClassicLayout = ({ localId, companyLogo="", companyName, companyDesc="", t
                         </div>
                     )}
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        {testimonials.map(({ id, username, message }) => (
+                        {testimonials.slice(0, 4).map(({ id, username, message }) => (
                             <blockquote
                                 key={id}
                                 className="bg-card text-card-foreground p-4 rounded-xl border py-6 shadow-sm"

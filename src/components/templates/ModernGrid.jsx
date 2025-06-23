@@ -56,7 +56,7 @@ const ModernGrid = ({ localId, companyLogo="", companyName, companyDesc="", test
                                     No testimonials yet — be the first to share your thoughts! 🙌
                                 </div>
                             )}
-                            {testimonials.map(({ id, username, message }) => (
+                            {testimonials.slice(0, 4).map(({ id, username, message }) => (
                                 <blockquote
                                     key={id}
                                     className="bg-card text-card-foreground p-6 rounded-xl border border-border shadow-sm"

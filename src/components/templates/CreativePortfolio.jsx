@@ -60,7 +60,7 @@ const CreativePortfolio = ({ localId, companyLogo="", companyName, companyDesc="
                                 No testimonials yet — be the first to share your thoughts! 🙌
                             </div>
                         )}
-                        {testimonials.map(({ id, username, message }, i) => (
+                        {testimonials.slice(0, 4).map(({ id, username, message }, i) => (
                             <blockquote
                                 key={id}
                                 className={`bg-card text-card-foreground rounded-lg p-6 shadow-md border border-border transform transition-transform duration-300 hover:scale-105 ${
