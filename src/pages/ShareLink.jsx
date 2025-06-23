@@ -22,7 +22,7 @@ const ShareLink = () => {
     const { slug } = useParams();
 
     const [user, setUser] = useState(null);
-    const [testimonials, setTestimonials] = useState(null);
+    const [testimonials, setTestimonials] = useState([]);
     const [loading, setLoading] = useState(true);
 
     const selected = user?.template || 0;
@@ -33,9 +33,9 @@ const ShareLink = () => {
             try {
                 const uid = await SlugService.get(slug);
                 const user = await UserService.get(uid?.localId);
-                const testimonials = await TestimonialService.get(uid?.localId);
+                const testimonialsData = await TestimonialService.get(uid?.localId);
                 setUser(user);
-                setTestimonials(Object.values(testimonials));
+                setTestimonials(testimonialsData ? Object.values(testimonialsData) : []);
             } catch (error) {
                 setUser(null);
             } finally {
@@ -47,7 +47,7 @@ const ShareLink = () => {
     }, []);
 
     if (loading) return <Loader />;
-    if (!user.companyName) return <h2>User not found</h2>;
+    if (!user || !user.companyName) return <h2>User not found</h2>;
 
     return (
         <>
