@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 import { Button } from "../ui/button"
 import {
@@ -12,6 +12,9 @@ import Logo from "../ui/Logo";
 import { AlignJustify } from "lucide-react";
 
 const Header = () => {
+
+    const location = useLocation();
+
     return (
         <header className="border-b">
             <div className="p-4 w-full max-w-6xl mx-auto flex justify-between items-center">
@@ -26,6 +29,27 @@ const Header = () => {
                         </SheetTrigger>
                         <SheetContent side="top">
                             <ul className="p-4 pt-12 flex flex-col gap-3">
+                                {
+                                    location.pathname === "/landing" && (
+                                        <>
+                                            <SheetClose asChild>
+                                                <li>
+                                                    <a href="#home" className="hover:text-muted-foreground">Home</a>
+                                                </li>
+                                            </SheetClose>
+                                            <SheetClose asChild>
+                                                <li>
+                                                    <a href="#features" className="hover:text-muted-foreground">Features</a>
+                                                </li>
+                                            </SheetClose>
+                                            <SheetClose asChild>
+                                                <li className="mb-2 hover:text-muted-foreground">
+                                                    <a href="#pricing">Pricing</a>
+                                                </li>
+                                            </SheetClose>
+                                        </>
+                                    )
+                                }
                                 <SheetClose asChild>
                                     <Button asChild variant="outline" className="w-full">
                                         <Link to="/login">Login</Link>
@@ -41,8 +65,23 @@ const Header = () => {
                     </Sheet>
                 </nav>
                 <nav className="hidden sm:flex">
-                    <ul className="flex gap-3">
-                        <Button asChild variant="outline">
+                    <ul className="flex gap-8 items-center">
+                        {
+                            location.pathname === "/landing" && (
+                                <>
+                                    <li>
+                                        <a href="#home" className="hover:text-muted-foreground">Home</a>
+                                    </li>
+                                    <li>
+                                        <a href="#features" className="hover:text-muted-foreground">Features</a>
+                                    </li>
+                                    <li>
+                                        <a href="#pricing" className="hover:text-muted-foreground">Pricing</a>
+                                    </li>
+                                </>
+                            )
+                        }
+                        <Button asChild variant="outline" className="-mr-4">
                             <Link to="/login">Login</Link>
                         </Button>
                         <Button asChild>
